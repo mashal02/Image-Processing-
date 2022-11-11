@@ -1,0 +1,96 @@
+import cv2
+import numpy as np
+from PIL import Image 
+
+image = Image.open('smoothing.tif')  
+
+# Read the image
+img = cv2.imread('smoothing.tif', 0)
+imgarr = np.array(img)
+    
+    
+#get image chunk [val,val] of one pixel i,j
+def getchunk(i,j,val):
+    chunk=np.ones([val,val],dtype=int)
+    val=int(val/2)
+    x=0;
+    while(x<=val):
+        y=0;
+        while(y<=val):
+            chunk[val-x][val-y]=imgarr[i-x][j-y]
+            chunk[val-x][val+y]=imgarr[i-x][j+y]
+            chunk[val+x][val-y]=imgarr[i+x][j-y]
+            chunk[val+x][val+y]=imgarr[i+x][j+y]
+            y=y+1
+        x=x+1
+    return chunk
+def maskonpixel(i,j,val):
+        chunk = getchunk(i,j,val)
+        mask = np.ones([val, val], dtype = int)
+        mask = mask / (val**2)
+        x=0
+        y=0
+        finalval=0
+        for x in range(0,val):
+            for y in range(0,val):
+                finalval=finalval+ mask[x][y]*chunk[x][y]
+        imgarr[i][j]=int(finalval)
+        return finalval
+
+#for 3x3 mask    
+#convolving through the whole image
+#m,n=img.shape already defined above
+for x in range (1,m-1):
+    for y in range (1,n-1):
+        imgarr[x][y]=maskonpixel(x,y,3)
+        
+data = Image.fromarray(imgarr)
+      
+    # saving the final output 
+    # as a PNG file
+data.save('Output3x3.png')
+   
+    
+    
+#for 5x5 mask    
+#convolving through the whole image
+#m,n=img.shape already defined above
+for x in range (2,m-2):
+    for y in range (2,n-2):
+        imgarr[x][y]=maskonpixel(x,y,5)
+        
+data = Image.fromarray(imgarr)
+      
+    # saving the final output 
+    # as a PNG file
+data.save('Output5x5.png')
+
+
+
+#for 15x15 mask    
+#convolving through the whole image
+#m,n=img.shape already defined above
+for x in range (7,m-7):
+    for y in range (7,n-7):
+        imgarr[x][y]=maskonpixel(x,y,15)
+        
+data = Image.fromarray(imgarr)
+      
+    # saving the final output 
+    # as a PNG file
+data.save('Output15x15.png')
+
+
+
+#for 35x35 mask    
+#convolving through the whole image
+#m,n=img.shape already defined above
+for x in range (17,m-17):
+    for y in range (17,n-17):
+        imgarr[x][y]=maskonpixel(x,y,35)
+        
+data = Image.fromarray(imgarr)
+      
+    # saving the final output 
+    # as a PNG file
+data.save('Output35x35.png')
