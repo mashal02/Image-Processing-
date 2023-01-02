@@ -1,6 +1,6 @@
 ## Original Image
-
-# 1st iteration (Random Centroids)
+![Capture](https://user-images.githubusercontent.com/83532882/210198435-35a56ace-e479-42f3-a782-851ffb0e718f.PNG)
+## 1st iteration (Random Centroids)
 ![1](https://user-images.githubusercontent.com/83532882/210198196-e872e1c6-1c22-4ec3-a2b9-dde43bbf6094.PNG)
 ## 2nd Iteration
 ![2](https://user-images.githubusercontent.com/83532882/210198265-28e37746-77cb-4d6b-b1ae-21195e6e6dbf.png)
